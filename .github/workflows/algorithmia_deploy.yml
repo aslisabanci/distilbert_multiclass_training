@@ -1,0 +1,26 @@
+name: Deploy to Algorithmia
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  algorithmia-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Main Repo
+        uses: actions/checkout@v2.0.0
+        with:
+          ref: ${{github.sha}}
+      - name: Deploy Model to Algorithmia
+        uses: algorithmiaio/algorithmia-modeldeployment-action@1.0.1
+        env:
+          HEAD_COMMIT_MSG: ${{ github.event.head_commit.message }}
+        with:
+          algorithmia_api_key: ${{ secrets.ALGORITHMIA_API_KEY }}
+          algorithmia_username: ${{ secrets.ALGORITHMIA_USERNAME }}
+          algorithmia_email: ${{ secrets.ALGORITHMIA_EMAIL }}
+          algorithmia_password: ${{ secrets.ALGORITHMIA_PASSWORD }}
+          algorithmia_algoname:  YOUR_ALGORITHM_NAME
+        

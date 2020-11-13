@@ -1,0 +1,2 @@
+algorithmia>=1.0.0,<2.0
+# Add your algorithm's required packages here, with their version numbers
