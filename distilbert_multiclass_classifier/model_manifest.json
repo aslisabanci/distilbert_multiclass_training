@@ -1,5 +1,5 @@
 {
-    "model_filepath": "./checkpoints.pth",
+    "model_filepath": "./checkpoint.pth",
     "model_origin_commit_SHA": "COMMIT SHA OF THE WORKFLOW TRIGGER EVENT",
     "model_origin_commit_msg": "COMMIT MSG OF THE WORKFLOW TRIGGER EVENT",
     "model_origin_repo": "CURRENT GIT REPO OF THIS PROJECT",
