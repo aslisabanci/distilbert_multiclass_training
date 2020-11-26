@@ -22,5 +22,6 @@ jobs:
           algorithmia_username: ${{ secrets.ALGORITHMIA_USERNAME }}
           algorithmia_email: ${{ secrets.ALGORITHMIA_EMAIL }}
           algorithmia_password: ${{ secrets.ALGORITHMIA_PASSWORD }}
-          algorithmia_algoname:  YOUR_ALGORITHM_NAME
+          algorithmia_algoname: distilbert_multiclass_classifier
+          git_host: git.insights1.enthalpy.click
         
