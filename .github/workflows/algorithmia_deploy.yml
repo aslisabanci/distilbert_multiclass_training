@@ -7,14 +7,14 @@ on:
 
 jobs:
   algorithmia-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Main Repo
         uses: actions/checkout@v2.0.0
         with:
           ref: ${{github.sha}}
       - name: Deploy Model to Algorithmia
-        uses: algorithmiaio/algorithmia-modeldeployment-action@1.0.1
+        uses: algorithmiaio/algorithmia-modeldeployment-action@master
         env:
           HEAD_COMMIT_MSG: ${{ github.event.head_commit.message }}
         with:
