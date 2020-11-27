@@ -1,6 +1,6 @@
 algorithmia>=1.0.0,<2.0
 joblib
-torch==1.7.0+cu101
+torch==1.6.0+cu101
 transformers
 pandas
 numpy
