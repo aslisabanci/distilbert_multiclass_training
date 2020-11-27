@@ -122,7 +122,7 @@ def predict_single(input_texts):
 
 
 manifest = load_model_manifest()
-model, tokemnizer = load_model(manifest)
+model, tokenizer = load_model(manifest)
 
 
 def apply(input):
