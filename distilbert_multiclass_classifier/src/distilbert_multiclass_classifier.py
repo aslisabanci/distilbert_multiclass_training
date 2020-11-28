@@ -123,7 +123,7 @@ def predict_single(input_texts):
     for predicted_class, prob in zip(classes, probs):
         results.append(
             {
-                "class": reverse_classes[int(np.argmax(predicted_class))],
+                "class": class_mapping[int(np.argmax(predicted_class))],
                 "confidence": float(np.max(prob)),
             }
         )
