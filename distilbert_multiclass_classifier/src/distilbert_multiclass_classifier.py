@@ -42,9 +42,17 @@ def load_model(manifest):
         checkpoints = client.file(checkpoints_path).getFile().name
         assert_model_md5(checkpoints)
 
+    reverse_classes = {
+        0: "Movies_Negative",
+        1: "Movies_Positive",
+        2: "Food_Negative",
+        3: "Food_Positive",
+        4: "Clothing_Negative",
+        5: "Clothing_Positive",
+    }
     model = DistilBertForSequenceClassification.from_pretrained(
         "distilbert-base-uncased",
-        num_labels=4,
+        num_labels=len(reverse_classes),
         output_attentions=False,
         output_hidden_states=False,
     )
@@ -111,10 +119,11 @@ def predict_single(input_texts):
     classes, probs = evaluate_single(data_loader)
 
     results = []
+
     for predicted_class, prob in zip(classes, probs):
         results.append(
             {
-                "class": int(np.argmax(predicted_class)),
+                "class": reverse_classes[int(np.argmax(predicted_class))],
                 "confidence": float(np.max(prob)),
             }
         )
