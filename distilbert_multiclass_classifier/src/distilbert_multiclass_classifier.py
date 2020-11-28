@@ -42,7 +42,7 @@ def load_model(manifest):
         checkpoints = client.file(checkpoints_path).getFile().name
         assert_model_md5(checkpoints)
 
-    reverse_classes = {
+    class_mapping = {
         0: "Movies_Negative",
         1: "Movies_Positive",
         2: "Food_Negative",
@@ -52,14 +52,14 @@ def load_model(manifest):
     }
     model = DistilBertForSequenceClassification.from_pretrained(
         "distilbert-base-uncased",
-        num_labels=len(reverse_classes),
+        num_labels=len(class_mapping),
         output_attentions=False,
         output_hidden_states=False,
     )
     tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
     model.cuda()
     model.load_state_dict(torch.load(checkpoints))
-    return model, tokenizer
+    return model, tokenizer, class_mapping
 
 
 def assert_model_md5(model_file):
@@ -131,7 +131,7 @@ def predict_single(input_texts):
 
 
 manifest = load_model_manifest()
-model, tokenizer = load_model(manifest)
+model, tokenizer, class_mapping = load_model(manifest)
 
 
 def apply(input):
