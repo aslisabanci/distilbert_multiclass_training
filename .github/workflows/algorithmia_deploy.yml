@@ -23,7 +23,7 @@ jobs:
           algorithmia_email: ${{ secrets.ALGORITHMIA_EMAIL }}
           algorithmia_password: ${{ secrets.ALGORITHMIA_PASSWORD }}
           algorithmia_algoname: distilbert_multiclass_classifier
-          git_host: git.algorithmia.com
+          git_host: git.devopsbay1.enthalpy.click
           model_path: checkpoint.pth
           notebook_path: train_validate_distilbert_multiclass.ipynb
 
