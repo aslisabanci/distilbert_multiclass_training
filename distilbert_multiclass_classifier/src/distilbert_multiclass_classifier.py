@@ -57,8 +57,7 @@ def load_model(manifest):
         output_hidden_states=False,
     )
     tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-    model.cuda()
-    model.load_state_dict(torch.load(checkpoints))
+    model.load_state_dict(torch.load(checkpoints, map_location=torch.device("cpu")))
     return model, tokenizer, class_mapping
 
 
@@ -84,7 +83,8 @@ def evaluate_single(dataloader_val):
     predictions, probs = [], []
 
     for batch in dataloader_val:
-        batch = tuple(b.to("cuda") for b in batch)
+        # batch = tuple(b.to("cuda") for b in batch)
+        batch = tuple(b for b in batch)
         inputs = {"input_ids": batch[0], "attention_mask": batch[1]}
 
         with torch.no_grad():
@@ -121,12 +121,12 @@ def predict_single(input_texts):
     results = []
 
     for predicted_class, prob in zip(classes, probs):
+        predicted_class = class_mapping[int(np.argmax(predicted_class))]
+        confidence = float(np.max(prob))
         results.append(
-            {
-                "class": class_mapping[int(np.argmax(predicted_class))],
-                "confidence": float(np.max(prob)),
-            }
+            {"class": predicted_class, "confidence": confidence,}
         )
+        client.report_insights({"model_confidence": confidence})
     return results
 
 
