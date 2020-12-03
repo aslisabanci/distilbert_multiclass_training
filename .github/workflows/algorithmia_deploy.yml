@@ -7,7 +7,7 @@ on:
 
 jobs:
   algorithmia-deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Main Repo
         uses: actions/checkout@v2.0.0
