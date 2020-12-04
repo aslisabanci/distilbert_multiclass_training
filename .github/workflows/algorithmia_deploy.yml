@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v2.0.0
         with:
           ref: ${{github.sha}}
+          path: main
       - name: Deploy Model to Algorithmia
         uses: algorithmiaio/algorithmia-modeldeployment-action@master
         env:
