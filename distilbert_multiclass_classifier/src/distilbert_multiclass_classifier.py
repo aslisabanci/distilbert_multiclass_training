@@ -40,7 +40,7 @@ def load_model(manifest):
         checkpoints = checkpoints_path
     else:
         checkpoints = client.file(checkpoints_path).getFile().name
-        assert_model_md5(checkpoints)
+        # assert_model_md5(checkpoints)
 
     class_mapping = {
         0: "Movies_Negative",
@@ -57,7 +57,8 @@ def load_model(manifest):
         output_hidden_states=False,
     )
     tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-    model.load_state_dict(torch.load(checkpoints, map_location=torch.device("cpu")))
+    # model.load_state_dict(torch.load(checkpoints, map_location=torch.device("cpu")))
+    model.load_state_dict(torch.load(checkpoints))
     return model, tokenizer, class_mapping
 
 
