@@ -40,7 +40,7 @@ def load_model(manifest):
         checkpoints = checkpoints_path
     else:
         checkpoints = client.file(checkpoints_path).getFile().name
-        # assert_model_md5(checkpoints)
+        assert_model_md5(checkpoints)
 
     class_mapping = {
         0: "Movies_Negative",
@@ -57,8 +57,7 @@ def load_model(manifest):
         output_hidden_states=False,
     )
     tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-    # model.load_state_dict(torch.load(checkpoints, map_location=torch.device("cpu")))
-    model.load_state_dict(torch.load(checkpoints))
+    model.load_state_dict(torch.load(checkpoints, map_location=torch.device("cpu")))
     return model, tokenizer, class_mapping
 
 
@@ -66,15 +65,13 @@ def assert_model_md5(model_file):
     """
     Calculates the loaded model file's MD5 and compares the actual file hash with the hash on the model manifest
     """
+    md5 = hashlib.md5()
     md5_hash = None
     DIGEST_BLOCK_SIZE = 128 * 64
     with open(model_file, "rb") as f:
-        hasher = hashlib.md5()
-        buf = f.read(DIGEST_BLOCK_SIZE)
-        while len(buf) > 0:
-            hasher.update(buf)
-            buf = f.read(DIGEST_BLOCK_SIZE)
-        md5_hash = hasher.hexdigest()
+        for chunk in iter(lambda: f.read(DIGEST_BLOCK_SIZE), b""):
+            md5.update(chunk)
+        md5_hash = md5.hexdigest()
     assert manifest["model_md5_hash"] == md5_hash
     print("Model file's runtime MD5 hash equals to the upload time hash, great!")
 
