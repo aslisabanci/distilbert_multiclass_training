@@ -29,6 +29,5 @@ jobs:
           algorithmia_password: ${{ secrets.ALGORITHMIA_PASSWORD }}
           algorithmia_algoname: distilbert_multiclass_classifier
           git_host: git.devopsbay1.enthalpy.click
-          algorithmia_api: https://api.devopsbay1.enthalpy.click
           model_path: distilbert-checkpoints.pth
 
