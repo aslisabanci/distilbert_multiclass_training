@@ -30,5 +30,4 @@ jobs:
           algorithmia_algoname: distilbert_multiclass_classifier
           git_host: git.devopsbay1.enthalpy.click
           model_path: distilbert-checkpoints.pth
-          notebook_path: train_validate_distilbert_multiclass.ipynb
 
