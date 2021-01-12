@@ -76,7 +76,7 @@ def assert_model_md5(model_file):
     print("Model file's runtime MD5 hash equals to the upload time hash, great!")
 
 
-def evaluate_single(dataloader_val):
+def evaluate(dataloader_val):
     model.eval()
     predictions, probs = [], []
 
@@ -98,7 +98,7 @@ def evaluate_single(dataloader_val):
     return predictions, probs
 
 
-def predict_single(input_texts):
+def predict(input_texts):
     encoded_inputs = tokenizer.batch_encode_plus(
         input_texts,
         max_length=250,
@@ -114,7 +114,7 @@ def predict_single(input_texts):
     data_loader = DataLoader(
         tensor_ds, sampler=SequentialSampler(tensor_ds), batch_size=32
     )
-    classes, probs = evaluate_single(data_loader)
+    classes, probs = evaluate(data_loader)
 
     results = []
 
@@ -133,7 +133,7 @@ model, tokenizer, class_mapping = load_model(manifest)
 
 
 def apply(input):
-    results = predict_single(input)
+    results = predict(input)
     return results
 
 
